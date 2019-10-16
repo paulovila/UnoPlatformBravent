@@ -25,6 +25,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)RateBackgroundConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IconTemplateSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">

@@ -31,6 +31,24 @@ namespace UnoWebApiSwagger.WebApiClient
                         SpotRate = 14,
                         SpotWeek = 9,
                     },
+                    new Currency()
+                    {
+                        Code = "TST4",
+                        SpotRate = 12,
+                        SpotWeek = 12,
+                    },
+                    new Currency()
+                    {
+                        Code = "TST5",
+                        SpotRate = 8,
+                        SpotWeek = 15,
+                    },
+                    new Currency()
+                    {
+                        Code = "TST6",
+                        SpotRate = 14,
+                        SpotWeek = 11,
+                    },
                 },
                 EffectiveDate = DateTime.Now,
             });
