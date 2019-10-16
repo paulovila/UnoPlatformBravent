@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UnoWebApiSwagger.ClientContracts\UnoWebApiSwagger.ClientContracts.csproj" />
     <ProjectReference Include="..\UnoWebApiSwagger.WebApiClient\UnoWebApiSwagger.WebApiClient.csproj" />
   </ItemGroup>
 

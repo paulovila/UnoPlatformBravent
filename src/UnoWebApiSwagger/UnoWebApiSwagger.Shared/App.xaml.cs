@@ -1,9 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Reflection;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -15,6 +18,12 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ButchersQA.Uwp;
+using Grace.DependencyInjection;
+using UnoMvvm;
+using UnoWebApiSwagger.ClientContracts;
+using UnoWebApiSwagger.ViewModels;
+using UnoWebApiSwagger.WebApiClient;
 
 namespace UnoWebApiSwagger
 {
@@ -33,6 +42,50 @@ namespace UnoWebApiSwagger
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            var container = new DependencyInjectionContainer();
+            ViewModelLocationProvider.ViewModelFactory = t =>
+            {
+                try
+                {
+                    return container.Locate(t);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.ToString());
+                }
+                System.Diagnostics.Debug.WriteLine("-------Error returning null");
+                return null;
+            };
+
+            ConfigureContainer(container);
+
+            TaskScheduler.UnobservedTaskException += (s, e) => EventAggregator.GetEvent<ErrorEvent>().Publish(e.Exception);
+            AppDomain.CurrentDomain.UnhandledException += (s, e) => EventAggregator.GetEvent<ErrorEvent>().Publish(e.ExceptionObject as Exception);
+            //AppDomain.CurrentDomain.FirstChanceException += (s, e) => Messenger.Send(new ErrorEvent(e.Exception));
+            UnhandledException += (s, e) =>
+            {
+                e.Handled = true;
+                EventAggregator.GetEvent<ErrorEvent>().Publish(e.Exception);
+            };
+#if __WASM__
+            var httpMessageHandler = Type.GetType("System.Net.Http.HttpClient, System.Net.Http")
+                .GetField("GetHttpMessageHandler", BindingFlags.Static | BindingFlags.NonPublic);
+
+            httpMessageHandler.SetValue(null, (Func<System.Net.Http.HttpMessageHandler>)(() => new Uno.UI.Wasm.WasmHttpHandler()));
+#endif
+        }
+
+        private void ConfigureContainer(DependencyInjectionContainer builder)
+        {
+            //builder.Configure(c => c.Export<MainWindow>().AsSelf());
+            //builder.Configure(c => c.Export<MainWindowViewModel>());
+            builder.Configure(c => c.Export<EventAggregator>().As<IEventAggregator>());
+            builder.Configure(c => c.Export<LogService>().As<ILogService>());
+            builder.Configure(c => c.Export<UnoMvvm.Navigation.NavFrame>().As<INavService>());
+            builder.Configure(c => c.Export<BaseUrlConfig>().As<IBaseUrlConfig>());
+            builder.Configure(c => c.Export<TokenClientConfig>().As<ITokenClientConfig>());
+            builder.Configure(c => c.Export<TokenRepository>().As<ITokenRepository>());
+            builder.Configure(c => c.Export<UnoMvvm.Navigation.DispatcherUiService>().As<IDispatcherUiService>());
         }
 
         /// <summary>
@@ -147,5 +200,8 @@ namespace UnoWebApiSwagger
                 .AddConsole(LogLevel.Information);
 #endif
         }
+        public IEventAggregator EventAggregator;
+
+
     }
 }
