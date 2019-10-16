@@ -5,4 +5,8 @@
     xmlns:local="using:UnoWebApiSwagger"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <local:Composition x:Key="Composition" />
+    </Application.Resources>
+
 </Application>

@@ -42,22 +42,7 @@ namespace UnoWebApiSwagger
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            var container = new DependencyInjectionContainer();
-            ViewModelLocationProvider.ViewModelFactory = t =>
-            {
-                try
-                {
-                    return container.Locate(t);
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(ex.ToString());
-                }
-                System.Diagnostics.Debug.WriteLine("-------Error returning null");
-                return null;
-            };
-
-            ConfigureContainer(container);
+            
 
             TaskScheduler.UnobservedTaskException += (s, e) => EventAggregator.GetEvent<ErrorEvent>().Publish(e.Exception);
             AppDomain.CurrentDomain.UnhandledException += (s, e) => EventAggregator.GetEvent<ErrorEvent>().Publish(e.ExceptionObject as Exception);
@@ -75,18 +60,7 @@ namespace UnoWebApiSwagger
 #endif
         }
 
-        private void ConfigureContainer(DependencyInjectionContainer builder)
-        {
-            //builder.Configure(c => c.Export<MainWindow>().AsSelf());
-            //builder.Configure(c => c.Export<MainWindowViewModel>());
-            builder.Configure(c => c.Export<EventAggregator>().As<IEventAggregator>());
-            builder.Configure(c => c.Export<LogService>().As<ILogService>());
-            builder.Configure(c => c.Export<UnoMvvm.Navigation.NavFrame>().As<INavService>());
-            builder.Configure(c => c.Export<BaseUrlConfig>().As<IBaseUrlConfig>());
-            builder.Configure(c => c.Export<TokenClientConfig>().As<ITokenClientConfig>());
-            builder.Configure(c => c.Export<TokenRepository>().As<ITokenRepository>());
-            builder.Configure(c => c.Export<UnoMvvm.Navigation.DispatcherUiService>().As<IDispatcherUiService>());
-        }
+       
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points

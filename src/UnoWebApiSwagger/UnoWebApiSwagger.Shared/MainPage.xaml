@@ -2,17 +2,18 @@
     x:Class="UnoWebApiSwagger.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UnoWebApiSwagger"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:UnoWebApiSwagger.ViewModels"
     xmlns:uwp="using:ButchersQA.Uwp"
+    xmlns:webApiClient="using:UnoWebApiSwagger.WebApiClient"
     mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource Composition}, Path=Root}"
     d:DataContext="{d:DesignInstance viewModels:MainPageViewModelDesign, IsDesignTimeCreatable=True}">
     <Page.Resources>
         <uwp:RateBackgroundConverter x:Key="RateBackgroundConverter" />
         <DataTemplate x:Key="ListViewItemTemplate1">
-            <Grid>
+            <Grid d:DataContext="{d:DesignInstance webApiClient:Currency}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="50" />
