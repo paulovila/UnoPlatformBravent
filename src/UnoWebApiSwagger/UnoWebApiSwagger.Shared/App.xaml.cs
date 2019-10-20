@@ -42,11 +42,12 @@ namespace UnoWebApiSwagger
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            
+            ViewModelLocationProvider.ViewModelFactory = t => Composition.Container.Locate(t);
+
 
             TaskScheduler.UnobservedTaskException += (s, e) => EventAggregator.GetEvent<ErrorEvent>().Publish(e.Exception);
             AppDomain.CurrentDomain.UnhandledException += (s, e) => EventAggregator.GetEvent<ErrorEvent>().Publish(e.ExceptionObject as Exception);
-            //AppDomain.CurrentDomain.FirstChanceException += (s, e) => Messenger.Send(new ErrorEvent(e.Exception));
+            //AppDomain.CurrentDomain.FirstChanceException += (s, e) => EventAggregator.GetEvent<ErrorEvent>().Publish(e.Exception);
             UnhandledException += (s, e) =>
             {
                 e.Handled = true;
@@ -60,7 +61,7 @@ namespace UnoWebApiSwagger
 #endif
         }
 
-       
+
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -70,10 +71,10 @@ namespace UnoWebApiSwagger
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
-			if (System.Diagnostics.Debugger.IsAttached)
-			{
-				// this.DebugSettings.EnableFrameRateCounter = true;
-			}
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                // this.DebugSettings.EnableFrameRateCounter = true;
+            }
 #endif
             Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
 
@@ -81,6 +82,9 @@ namespace UnoWebApiSwagger
             // just ensure that the window is active
             if (rootFrame == null)
             {
+                EventAggregator = Composition.Container.Locate<IEventAggregator>();
+               var  EventAggregator2 = Composition.Container.Locate<IEventAggregator>();
+               var eq = EventAggregator == EventAggregator2;
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
@@ -102,6 +106,7 @@ namespace UnoWebApiSwagger
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
+                    rootFrame.DataContext = Composition.Container.Locate<MainPageViewModel>();
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Ensure the current window is active
@@ -169,7 +174,7 @@ namespace UnoWebApiSwagger
 					}
                 )
 #if DEBUG
-				.AddConsole(LogLevel.Debug);
+                .AddConsole(LogLevel.Debug);
 #else
                 .AddConsole(LogLevel.Information);
 #endif

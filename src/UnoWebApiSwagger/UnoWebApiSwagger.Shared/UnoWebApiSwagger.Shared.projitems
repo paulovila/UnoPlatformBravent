@@ -20,15 +20,25 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)BaseUrlConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Composition.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LogService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)RateBackgroundConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IconTemplateSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rates.xaml.cs">
+      <DependentUpon>$fileinputname$.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Rates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -43,5 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="C:\Repos\UnoPlatformBravent\src\UnoWebApiSwagger\UnoWebApiSwagger.Shared\Rates.xaml.cs">
+      <DependentUpon>Rates.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

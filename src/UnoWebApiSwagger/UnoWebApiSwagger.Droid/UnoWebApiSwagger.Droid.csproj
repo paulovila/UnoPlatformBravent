@@ -65,12 +65,12 @@
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1-uno.28</Version>
     </PackageReference>
-    <PackageReference Include="Uno.UI" Version="2.0.512-dev.3325" />
+    <PackageReference Include="Uno.UI" Version="2.0.512-dev.3490" />
     <PackageReference Include="Uno.UniversalImageLoader" Version="1.9.32" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
     <PackageReference Include="UnoMvvm.Navigation">
-      <Version>2.0.512.3325</Version>
+      <Version>2.0.512.3490</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

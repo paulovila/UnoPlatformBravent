@@ -20,7 +20,7 @@
       <Version>2.0.1-uno.28</Version>
     </PackageReference>
     <PackageReference Include="UnoMvvm.Navigation">
-      <Version>2.0.512.3325</Version>
+      <Version>2.0.512.3490</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup>

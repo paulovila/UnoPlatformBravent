@@ -1,37 +1,33 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System;
 using UnoMvvm;
-using UnoWebApiSwagger.WebApiClient;
 
 namespace UnoWebApiSwagger.ViewModels
 {
     public class MainPageViewModel : BindableBase
     {
-        private readonly IRateWebClient _rateWebClient;
-        private Rates _rates;
-
-        public MainPageViewModel(IRateWebClient rateWebClient)
+        private readonly INavService _navService;
+        private readonly IEventAggregator _eventAggregator;
+        private readonly IDispatcherUiService _dispatcherUiService;
+        private string _error;
+        public MainPageViewModel(INavService navService, IEventAggregator eventAggregator, IDispatcherUiService dispatcherUiService)
         {
-            _rateWebClient = rateWebClient;
-            RefreshCommand = new DelegateCommand(OnRefresh);
+            _navService = navService;
+            _eventAggregator = eventAggregator;
+            _dispatcherUiService = dispatcherUiService;
+            _navService.NavigationFailed = e => _eventAggregator.GetEvent<ErrorEvent>().Publish(e);
+            _eventAggregator.GetEvent<ErrorEvent>().Subscribe(LogError);
+            _dispatcherUiService.Run(() => _navService.Navigate<RatesViewModel>());
         }
 
-        public Rates Rates
+        public string Error
         {
-            get => _rates;
-            set => SetProperty(ref _rates, value);
+            get => _error;
+            set => SetProperty(ref _error, value);
         }
-
-        public ICommand RefreshCommand { get; }
-
-        private async void OnRefresh()
+        private void LogError(Exception ex)
         {
-            Rates = await _rateWebClient.GetAsync();
-        }
-
-        public async Task Load()
-        {
-            Rates = await _rateWebClient.GetAsync();
+            if (ex == null) return;
+            _dispatcherUiService.Run(() => Error = ex.Message);
         }
     }
 }

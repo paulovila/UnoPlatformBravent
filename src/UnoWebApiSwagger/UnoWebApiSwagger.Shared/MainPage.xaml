@@ -4,90 +4,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:navigation="using:UnoMvvm.Navigation"
     xmlns:viewModels="using:UnoWebApiSwagger.ViewModels"
-    xmlns:uwp="using:ButchersQA.Uwp"
-    xmlns:webApiClient="using:UnoWebApiSwagger.WebApiClient"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
-    DataContext="{Binding Source={StaticResource Composition}, Path=Root}"
-    d:DataContext="{d:DesignInstance viewModels:MainPageViewModelDesign, IsDesignTimeCreatable=True}">
-    <Page.Resources>
-        <uwp:IconTemplateSelector x:Key="IconTemplateSelector">
-            <uwp:IconTemplateSelector.DownTemplate>
-                <DataTemplate>
-                    <FontIcon Glyph="&#xE74B;" Foreground="Firebrick" />
-                </DataTemplate>
-            </uwp:IconTemplateSelector.DownTemplate>
-
-            <uwp:IconTemplateSelector.UpTemplate>
-                <DataTemplate>
-                    <FontIcon Glyph="&#xE74A;" Foreground="DarkGreen" />
-                </DataTemplate>
-            </uwp:IconTemplateSelector.UpTemplate>
-
-            <uwp:IconTemplateSelector.StableTemplate>
-                <DataTemplate>
-                    <FontIcon Glyph="&#xE94E;" Foreground="DodgerBlue" />
-                </DataTemplate>
-            </uwp:IconTemplateSelector.StableTemplate>
-
-        </uwp:IconTemplateSelector>
-        <DataTemplate x:Key="ListViewItemTemplate1">
-            <Grid d:DataContext="{d:DesignInstance webApiClient:Currency}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Column="0" Text="{Binding Code}" />
-                <TextBlock Grid.Column="1" Text="{Binding SpotRate}" HorizontalAlignment="Center" />
-                <TextBlock Grid.Column="2" Text="{Binding SpotWeek}" HorizontalAlignment="Center" />
-                <ContentControl Grid.Column="3" Content="{Binding}" ContentTemplateSelector="{StaticResource IconTemplateSelector}" />
-            </Grid>
-        </DataTemplate>
-        <!--<DataTemplate x:Key="ButtonContentTemplate1">
-            <Border Background="DodgerBlue" CornerRadius="8">
-                <ContentPresenter Content="{Binding}" Margin="6,0,6,3" />
-            </Border>
-        </DataTemplate>-->
-        <!--<Style TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="AliceBlue" />
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="ContentTemplate" Value="{StaticResource ButtonContentTemplate1}" />
-        </Style>-->
-    </Page.Resources>
-
-    <interactivity:Interaction.Behaviors>
-        <core:EventTriggerBehavior EventName="Loaded">
-            <core:InvokeCommandAction Command="{Binding RefreshCommand}" />
-        </core:EventTriggerBehavior>
-    </interactivity:Interaction.Behaviors>
-
-    <Grid Margin="10" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    d:DataContext="{d:DesignInstance viewModels:MainPageViewModelDesign, IsDesignTimeCreatable=True}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+   >
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <ListView
-            ItemTemplate="{StaticResource ListViewItemTemplate1}" ItemsSource="{Binding Rates.Currencies}"
-                  Grid.Row="0">
-            <ListView.Header>
-                <TextBlock Style="{StaticResource HeaderTextBlockStyle}">Stocks</TextBlock>
-            </ListView.Header>
-        </ListView>
-        <Button Command="{Binding RefreshCommand}" Grid.Row="1" HorizontalAlignment="Center">
-            <Button.Content>
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <SymbolIcon Symbol="Refresh"></SymbolIcon>
-                    <TextBlock Grid.Column="1">Refresh</TextBlock>
-                </StackPanel>
-            </Button.Content>
-        </Button>
+        <TextBlock Text="Uno platform demo"/>
+        <Grid Grid.Row="1" Background="HotPink" Padding="3">
+            <Frame x:Name="Frame1" navigation:NavFrame.Frame="{Binding ElementName=Frame1}"  Margin="3" />
+        </Grid>
+        <TextBlock Grid.Row="2" Text="{Binding Error}" Foreground="DarkRed"/>
     </Grid>
 </Page>

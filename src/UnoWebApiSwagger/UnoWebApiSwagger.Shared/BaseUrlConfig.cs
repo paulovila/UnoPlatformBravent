@@ -1,8 +1,8 @@
 ﻿using UnoWebApiSwagger.WebApiClient;
 
-namespace ButchersQA.Uwp
+namespace UnoWebApiSwagger.Shared
 {
-    internal class BaseUrlConfig : IBaseUrlConfig
+    public class BaseUrlConfig : IBaseUrlConfig
     {
         public string BaseUrl => "http://localhost:55255";
     }
