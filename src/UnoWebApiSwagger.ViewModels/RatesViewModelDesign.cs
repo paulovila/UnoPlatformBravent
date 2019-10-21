@@ -6,7 +6,7 @@ namespace UnoWebApiSwagger.ViewModels
 {
     public class RatesViewModelDesign : RatesViewModel
     {
-        public RatesViewModelDesign() : base(null)
+        public RatesViewModelDesign() : base(new TokenClientConfigDesign(), null)
         {
             Rates = new Rates
             {

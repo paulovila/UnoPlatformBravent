@@ -16,7 +16,7 @@ namespace UnoWebApiSwagger
         {
             var builder = new DependencyInjectionContainer();
             builder.Configure(c => c.Export<ViewModels.MainPageViewModel>().Lifestyle.Singleton());
-            builder.Configure(c => c.Export<WebApiClient.RateWebTestClient>().As<WebApiClient.IRateWebClient>().Lifestyle.Singleton());
+            builder.Configure(c => c.Export<WebApiClient.RateWebClient>().As<WebApiClient.IRateWebClient>().Lifestyle.Singleton());
             builder.Configure(c => c.Export<EventAggregator>().As<IEventAggregator>().Lifestyle.Singleton());
             builder.Configure(c => c.Export<UnoMvvm.Navigation.NavFrame>().As<INavService>().Lifestyle.Singleton());
             builder.Configure(c => c.Export<Shared.BaseUrlConfig>().As<WebApiClient.IBaseUrlConfig>().Lifestyle.Singleton());

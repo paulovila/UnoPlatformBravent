@@ -4,7 +4,7 @@ namespace UnoWebApiSwagger.WebApi
 {
     public class SessionDto
     {
-        public Guid StaffId { get; set; }
+        public int StaffId { get; set; }
         public string StaffNickName { get; set; }
         public string RoleCode { get; set; }
         public string StaffFullName { get; set; }
