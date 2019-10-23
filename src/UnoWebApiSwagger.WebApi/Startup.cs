@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,8 @@ namespace UnoWebApiSwagger.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddOptions();
             services.AddMvc()
                 .AddJsonOptions(options =>
                 {
@@ -44,7 +47,7 @@ namespace UnoWebApiSwagger.WebApi
                     builder => builder
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                        .WithOrigins("http://localhost:20046")
+                        .WithOrigins("http://localhost:20044")
                         .AllowCredentials()
                 );
             });
@@ -100,7 +103,9 @@ namespace UnoWebApiSwagger.WebApi
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
+
+            app.UseCors("CorsPolicy");
             app.UseMvc();
         }
     }
