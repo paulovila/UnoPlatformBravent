@@ -6,13 +6,8 @@ namespace UnoWebApiSwagger
     public class Composition
     {
         public static DependencyInjectionContainer Container;
-
-        public Composition()
-        {
-            Container = CreateContainer();
-        }
-
-        private static DependencyInjectionContainer CreateContainer()
+        
+        public static void CreateContainer()
         {
             var builder = new DependencyInjectionContainer();
             builder.Configure(c => c.Export<ViewModels.MainPageViewModel>().Lifestyle.Singleton());
@@ -24,7 +19,7 @@ namespace UnoWebApiSwagger
             builder.Configure(c => c.Export<WebApiClient.TokenRepository>().As<WebApiClient.ITokenRepository>().Lifestyle.Singleton());
             builder.Configure(c => c.Export<UnoMvvm.Navigation.DispatcherUiService>().As<IDispatcherUiService>().Lifestyle.Singleton());
             RegisterTypeForNavigation<Shared.Rates, ViewModels.RatesViewModel>(builder);
-            return builder;
+            Container = builder;
         }
         public static void RegisterTypeForNavigation<TV, TVM>(DependencyInjectionContainer builder)
         {
