@@ -12,11 +12,9 @@ namespace UnoWebApiSwagger.WebApi
         public Task<SessionDto> Authenticate(string username, string password) => Task.FromResult(
             new SessionDto
             {
-                IsAdmin = false,
-                StaffFullName = username,
+                UserName = username,
                 RoleCode = "Role1",
-                StaffId = 33,
-
+                UserId = 33,
             });
     }
 }

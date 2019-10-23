@@ -17,7 +17,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Text="Uno platform demo"/>
-        <Grid Grid.Row="1" Background="HotPink" Padding="3">
+        <Grid Grid.Row="1" Padding="3">
             <Frame x:Name="Frame1" navigation:NavFrame.Frame="{Binding ElementName=Frame1}"  Margin="3" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{Binding Error}" Foreground="DarkRed"/>

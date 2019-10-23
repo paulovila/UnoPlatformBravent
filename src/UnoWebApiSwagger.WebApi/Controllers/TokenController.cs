@@ -48,15 +48,15 @@ namespace UnoWebApiSwagger.WebApi.Controllers
 
         private async Task<Token> GenerateToken(SessionDto sessionDto)
         {
-            var claim1 = new ClaimsIdentity(new GenericIdentity(sessionDto.StaffNickName, "Token"), new[] {
-                          new Claim("staff", sessionDto.StaffNickName)
+            var claim1 = new ClaimsIdentity(new GenericIdentity(sessionDto.UserName, "Token"), new[] {
+                          new Claim("staff", sessionDto.UserName)
 
             }).FindFirst("staff");
             Claim[] claims = {
-                new Claim(JwtRegisteredClaimNames.Sub, sessionDto.StaffNickName),
+                new Claim(JwtRegisteredClaimNames.Sub, sessionDto.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
-                new Claim(ClaimTypes.NameIdentifier, sessionDto.StaffId.ToString()),
-                new Claim(ClaimTypes.Name, sessionDto.StaffNickName),
+                new Claim(ClaimTypes.NameIdentifier, sessionDto.UserId.ToString()),
+                new Claim(ClaimTypes.Name, sessionDto.UserName),
                 new Claim(ClaimTypes.Role, sessionDto.RoleCode),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.UtcNow.AddDays(1)).ToUnixTimeSeconds().ToString()),
