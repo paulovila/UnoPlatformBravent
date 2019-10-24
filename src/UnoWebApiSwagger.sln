@@ -24,6 +24,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnoWebApiSwagger.ViewModels
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnoWebApiSwagger.ClientContracts", "UnoWebApiSwagger.ClientContracts\UnoWebApiSwagger.ClientContracts.csproj", "{7D532C2D-0405-4283-8D6A-CD845E932986}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{78BC2194-4800-4277-A942-7FE621C5A48A}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		UnoWebApiSwagger\UnoWebApiSwagger.Shared\UnoWebApiSwagger.Shared.projitems*{43ddc7c4-a7cc-41ab-b788-94fcff50cb8f}*SharedItemsImports = 4
