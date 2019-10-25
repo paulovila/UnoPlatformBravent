@@ -16,7 +16,7 @@ namespace UnoWebApiSwagger.ViewModels
             _dispatcherUiService = dispatcherUiService;
             _navService.NavigationFailed = e => _eventAggregator.GetEvent<ErrorEvent>().Publish(e);
             _eventAggregator.GetEvent<ErrorEvent>().Subscribe(LogError);
-            _dispatcherUiService.Run(() => _navService.Navigate<RatesViewModel>());
+            _dispatcherUiService.Run(() => _navService.Navigate<LoginViewModel>());
         }
 
         public string Error

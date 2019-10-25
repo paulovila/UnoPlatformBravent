@@ -26,7 +26,7 @@ namespace UnoWebApiSwagger.ViewModels
         private string _lastToken;
         private TimeSpan _lastExpire;
 
-        public async Task<string> GetToken(CancellationToken cancellationToken)
+        public async Task<string> GetToken(CancellationToken cancellationToken = default)
         {
             if (!_lastAccess.HasValue || DateTime.UtcNow - _lastAccess > _lastExpire)
             {

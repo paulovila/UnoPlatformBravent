@@ -19,6 +19,7 @@ namespace UnoWebApiSwagger
             builder.Configure(c => c.Export<WebApiClient.TokenRepository>().As<WebApiClient.ITokenRepository>().Lifestyle.Singleton());
             builder.Configure(c => c.Export<UnoMvvm.Navigation.DispatcherUiService>().As<IDispatcherUiService>().Lifestyle.Singleton());
             RegisterTypeForNavigation<Shared.Rates, ViewModels.RatesViewModel>(builder);
+            throw new System.NotImplementedException("JM, aqui registramos View con ViewModels:  RegisterTypeForNavigation<Shared.Login, ViewModels.LoginViewModel>(builder);");
             Container = builder;
         }
         public static void RegisterTypeForNavigation<TV, TVM>(DependencyInjectionContainer builder)

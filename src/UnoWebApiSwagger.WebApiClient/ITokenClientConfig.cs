@@ -7,6 +7,6 @@ namespace UnoWebApiSwagger.WebApiClient
     { 
         string User { get; set; }
         string Password { get; set; }
-        Task<string> GetToken(CancellationToken cancellationToken);
+        Task<string> GetToken(CancellationToken cancellationToken = default);
     }
 }

@@ -5,7 +5,6 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace UnoWebApiSwagger.WebApi.Controllers
 {
@@ -19,8 +18,6 @@ namespace UnoWebApiSwagger.WebApi.Controllers
     {
         private readonly JwtIssuerOptions _jwtOptions;
         private readonly ITokenRepository _tokenRepository;
-        private readonly JsonSerializerSettings _serializerSettings;
-
 
         public TokenController(IOptions<JwtIssuerOptions> jwtOptions, ITokenRepository tokenRepository)
         {
@@ -28,10 +25,6 @@ namespace UnoWebApiSwagger.WebApi.Controllers
             ThrowIfInvalidOptions(_jwtOptions);
 
             _tokenRepository = tokenRepository;
-            _serializerSettings = new JsonSerializerSettings
-            {
-                Formatting = Formatting.Indented
-            };
         }
 
         [HttpGet]

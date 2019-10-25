@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UnoWebApiSwagger.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class RateController : ControllerBase
