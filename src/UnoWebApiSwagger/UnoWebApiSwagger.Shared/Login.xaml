@@ -6,32 +6,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:UnoWebApiSwagger.ViewModels"
+    d:DataContext="{Binding Source={d:DesignInstance IsDesignTimeCreatable=True, Type=viewModels:LoginViewModelDesign}}"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" d:DataContext="{d:DesignInstance viewModels:LoginViewModel}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-    <Grid VerticalAlignment="Center" Width="400" Background="LightGray" Padding="30 20 30 0" >
+        </ResourceDictionary>
+    </Page.Resources>
 
+<Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-
-        <StackPanel Margin="0">
-            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center" Text="Login" />
-            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Please, log in" Margin="0 10" />
-
-            <StackPanel>
-                <TextBox Header="Username" Text="{Binding UserName}" />
-                <TextBox Header="Password" Text="{Binding Password}" />
-            </StackPanel>
+        <Image Grid.RowSpan="3" Stretch="UniformToFill" Source="/Rates.jpg" />
+        <Border Grid.Row="1" d:LayoutOverrides="Height" HorizontalAlignment="Center" Opacity="0.79"  Padding="100,0,100,100" CornerRadius="20,20,20,20" Width="450" Background="#303030" />
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" >
+            <StackPanel Orientation="Vertical" Margin="10">
+                <Grid HorizontalAlignment="Center">
+                    <Path Width="100" Height="100" Fill="{StaticResource P_05_IconBrush}" Data="{StaticResource string_cleaver_circle}"      Stretch="Uniform"  />
+                </Grid>
+                    <TextBlock HorizontalAlignment="Center" Margin="0" Style="{StaticResource TitleTextBlockStyle}" Foreground="White" Text="Bravent Uno Platform Demo" VerticalAlignment="Top" />
+             </StackPanel>
+            <Grid Width="300" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBox PlaceholderText="Username" Margin="10" MaxLength="15" Height="40" Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="35,0,0,0" >
+                </TextBox>
+                <ContentControl IsTabStop="False" ContentTemplate="{StaticResource icon_username}" Width="22" Height="22" HorizontalAlignment="Left" Margin="20,19,0,19" VerticalAlignment="Stretch" />
+                <PasswordBox MaxLength="256" Grid.Row="1" Margin="10" Padding="35,0,0,0" PlaceholderText="Password" Height="40" Password="{Binding Password, Mode=TwoWay}" />
+                <ContentPresenter  ContentTemplate="{StaticResource icon_key}" Grid.Row="1" Width="22" Height="22" HorizontalAlignment="Left" Margin="20,19,0,19" />
+                <Button Content="Login" Command="{Binding LoginCommand}" Grid.Row="3"  Margin="10"  >
+                </Button>
+                <TextBlock Text="{Binding LastError}" Grid.Row="2" Foreground="Red" HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Stretch" />
+            </Grid>
         </StackPanel>
-
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20">
-            <Button Content="Login" Command="{Binding LoginCommand}"  />
-        </StackPanel>
-
-
     </Grid>
-
-
 </Page>

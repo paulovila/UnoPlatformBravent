@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using UnoMvvm;
 using UnoWebApiSwagger.WebApiClient;
@@ -11,6 +12,7 @@ namespace UnoWebApiSwagger.ViewModels
         private readonly INavService _navService;
         private string _userName;
         private string _password;
+        private string _lastError;
 
         public LoginViewModel(ITokenClientConfig tokenClientConfig, INavService navService)
         {
@@ -27,6 +29,12 @@ namespace UnoWebApiSwagger.ViewModels
             set => SetProperty(ref _userName, value);
         }
 
+        public string LastError
+        {
+            get => _lastError;
+            set => SetProperty(ref _lastError , value);
+        }
+
         public string Password
         {
             get => _password;
@@ -38,8 +46,13 @@ namespace UnoWebApiSwagger.ViewModels
         {
             _tokenClientConfig.User = UserName;
             _tokenClientConfig.Password = Password;
-            if (!string.IsNullOrEmpty(await _tokenClientConfig.GetToken()))
-                _navService.Navigate<RatesViewModel>();
+                LastError = null;
+
+                if (!string.IsNullOrEmpty(await _tokenClientConfig.GetToken()))
+                    _navService.Navigate<RatesViewModel>();
+                else
+                    LastError = "Login or password is invalid";
+
         }
     }
 }

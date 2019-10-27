@@ -6,6 +6,9 @@ namespace UnoWebApiSwagger.ViewModels
     {
         public LoginViewModelDesign() : base(new TokenClientConfigDesign(), new NavServiceDesign())
         {
+            UserName = "user1";
+            Password = "pass1";
+            LastError = "last error text 1";
         }
     }
 }
