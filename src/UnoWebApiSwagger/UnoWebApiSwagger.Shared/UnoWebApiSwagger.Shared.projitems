@@ -20,6 +20,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)BaseUrlConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Composition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -30,6 +33,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
