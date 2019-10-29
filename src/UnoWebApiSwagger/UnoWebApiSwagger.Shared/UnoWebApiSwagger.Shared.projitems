@@ -30,8 +30,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)RateBackgroundConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IconTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rates.xaml.cs">
       <DependentUpon>$fileinputname$.xaml</DependentUpon>
     </Compile>

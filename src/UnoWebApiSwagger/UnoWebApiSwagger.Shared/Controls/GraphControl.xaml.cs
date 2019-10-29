@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using SkiaSharp;
 using SkiaSharp.Views.UWP;
@@ -20,37 +21,67 @@ namespace SkiaSharpTest.Shared
 
         private static readonly Random Rnd = new Random();
 
-        void OnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
+
+        private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
-            SKImageInfo info = args.Info;
-            SKSurface surface = args.Surface;
-            SKCanvas canvas = surface.Canvas;
+            // the the canvas and properties
+            var canvas = e.Surface.Canvas;
 
-            canvas.Clear();
-            
-            var points = GetPoints();
-            var path = new SKPath();
-            var translatedPoints = points.Select(tuple => ((float)(tuple.Item1 * info.Width), (float)(info.Height - tuple.Item2 * info.Height))).ToList();
+            // get the screen density for scaling
+            var display = DisplayInformation.GetForCurrentView();
+            var scale = display.LogicalDpi / 96.0f;
+            var scaledSize = new SKSize(e.Info.Width / scale, e.Info.Height / scale);
 
-            var (startX, startY) = translatedPoints.First();
+            // handle the device screen density
+            canvas.Scale(scale);
 
-            path.MoveTo(startX, startY);
-            foreach (var (x, y) in translatedPoints)
+            // make sure the canvas is blank
+            canvas.Clear(SKColors.Yellow);
+
+            // draw some text
+            var paint = new SKPaint
             {
-                path.LineTo(x, y);
-            }
-
-            var strokePaint = new SKPaint
-            {
-                Style = SKPaintStyle.Stroke,
-                Color = SKColors.Red,
-                StrokeWidth = 1,
-                FilterQuality = SKFilterQuality.High,
+                Color = SKColors.Black,
                 IsAntialias = true,
+                Style = SKPaintStyle.Fill,
+                TextAlign = SKTextAlign.Center,
+                TextSize = 24
             };
+            var coord = new SKPoint(scaledSize.Width / 2, (scaledSize.Height + paint.TextSize) / 2);
+            canvas.DrawText("SkiaSharp", coord, paint);
 
-            canvas.DrawPath(path, strokePaint);
-        }
+         }
+        //void OnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
+        //{
+        //    SKImageInfo info = args.Info;
+        //    SKSurface surface = args.Surface;
+        //    SKCanvas canvas = surface.Canvas;
+
+        //    canvas.Clear();
+            
+        //    var points = GetPoints();
+        //    var path = new SKPath();
+        //    var translatedPoints = points.Select(tuple => ((float)(tuple.Item1 * info.Width), (float)(info.Height - tuple.Item2 * info.Height))).ToList();
+
+        //    var (startX, startY) = translatedPoints.First();
+
+        //    path.MoveTo(startX, startY);
+        //    foreach (var (x, y) in translatedPoints)
+        //    {
+        //        path.LineTo(x, y);
+        //    }
+
+        //    var strokePaint = new SKPaint
+        //    {
+        //        Style = SKPaintStyle.Stroke,
+        //        Color = SKColors.Red,
+        //        StrokeWidth = 1,
+        //        FilterQuality = SKFilterQuality.High,
+        //        IsAntialias = true,
+        //    };
+
+        //    canvas.DrawPath(path, strokePaint);
+        //}
 
         private IEnumerable<(double, double)> GetPoints()
         {

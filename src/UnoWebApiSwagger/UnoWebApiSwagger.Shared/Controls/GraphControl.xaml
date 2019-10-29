@@ -14,6 +14,9 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <win:Grid>
-    <skia:SKXamlCanvas PaintSurface="OnPaintSurface" />
+        <skia:SKXamlCanvas PaintSurface="OnPaintSurface" />
     </win:Grid>
+    <wasm:Grid>
+        <skia:SKXamlCanvas PaintSurface="OnPaintSurface" />
+    </wasm:Grid>
 </UserControl>
