@@ -1,45 +1,33 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Windows.Graphics.Display;
+﻿using System.Linq;
 using Windows.UI.Xaml;
 using SkiaSharp;
 using SkiaSharp.Views.UWP;
+using UnoWebApiSwagger.WebApiClient;
 
-namespace SkiaSharpTest.Shared
+namespace UnoWebApiSwagger.Shared
 {
     public sealed partial class GraphControl
     {
-        private const int PreviewPointCount = 3;
-
-
         public GraphControl()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
-
-        private static readonly Random Rnd = new Random();
 
         void OnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
             SKImageInfo info = args.Info;
             SKSurface surface = args.Surface;
             SKCanvas canvas = surface.Canvas;
-
             canvas.Clear();
 
             var points = GetPoints();
             var path = new SKPath();
-            var translatedPoints = points.Select(tuple => ((float)(tuple.Item1 * info.Width), (float)(info.Height - tuple.Item2 * info.Height))).ToList();
 
-            var (startX, startY) = translatedPoints.First();
+            var (startX, startY) = points.First();
 
             path.MoveTo(startX, startY);
-            foreach (var (x, y) in translatedPoints)
-            {
+            foreach (var (x, y) in points)
                 path.LineTo(x, y);
-            }
 
             var strokePaint = new SKPaint
             {
@@ -53,27 +41,21 @@ namespace SkiaSharpTest.Shared
             canvas.DrawPath(path, strokePaint);
         }
 
-        private IEnumerable<(double, double)> GetPoints()
+        private (float, float)[] GetPoints() => new[]
         {
-            if (Values == null)
-            {
-                return Enumerable.Range(0, PreviewPointCount)
-                    .Select(x => ((double) x / (PreviewPointCount - 1), Rnd.NextDouble())).ToList();
-            }
+            (0f, (float)Currency.SpotRate),
+            (7f, (float)Currency.SpotWeek),
+            (30f, (float)Currency.SpotMonth)
+        };
 
-            var doubles = Values.Cast<double>().ToList();
-            var count = doubles.Count;
-            return Enumerable.Range(0, count).Zip(doubles, (n, y) => ((double) n / (count - 1), y))
-                .ToList();
-        }
 
-        public static readonly DependencyProperty ValuesProperty = DependencyProperty.Register(
-            "Values", typeof(IEnumerable), typeof(GraphControl), new PropertyMetadata(default(IEnumerable)));
+        public static readonly DependencyProperty CurrencyProperty = DependencyProperty.Register(
+            "Currency", typeof(Currency), typeof(GraphControl), new PropertyMetadata(default(Currency)));
 
-        public IEnumerable Values
+        public Currency Currency
         {
-            get { return (IEnumerable) GetValue(ValuesProperty); }
-            set { SetValue(ValuesProperty, value); }
+            get => (Currency)GetValue(CurrencyProperty);
+            set => SetValue(CurrencyProperty, value);
         }
     }
 }

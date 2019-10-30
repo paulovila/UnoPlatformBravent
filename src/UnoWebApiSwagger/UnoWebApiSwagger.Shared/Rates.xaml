@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:webApiClient="using:UnoWebApiSwagger.WebApiClient"
     xmlns:viewModels="using:UnoWebApiSwagger.ViewModels"
-    xmlns:shared="using:SkiaSharpTest.Shared"
     mc:Ignorable="d" 
     d:DataContext="{d:DesignInstance viewModels:RatesViewModelDesign, IsDesignTimeCreatable=True}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" d:DesignWidth="458" d:DesignHeight="408">
@@ -27,7 +26,7 @@
                     <TextBlock Grid.Column="0" Text="{Binding Code}" />
                     <TextBlock Grid.Column="1" Text="{Binding SpotRate}" HorizontalAlignment="Center" />
                     <TextBlock Grid.Column="2" Text="{Binding SpotWeek}" HorizontalAlignment="Center" />
-                    <shared:GraphControl Grid.Column="3" Values="{Binding Converter={StaticResource CurrencyToValuesConverter}}" />
+                    <local:GraphControl Grid.Column="3" Currency="{Binding }" />
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
