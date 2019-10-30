@@ -260,6 +260,7 @@ namespace UnoWebApiSwagger.WebApiClient
         private string _code;
         private decimal _spotRate;
         private decimal _spotWeek;
+        private decimal _spotMonth;
     
         [Newtonsoft.Json.JsonProperty("Code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Code
@@ -298,6 +299,20 @@ namespace UnoWebApiSwagger.WebApiClient
                 if (_spotWeek != value)
                 {
                     _spotWeek = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("SpotMonth", Required = Newtonsoft.Json.Required.Always)]
+        public decimal SpotMonth
+        {
+            get { return _spotMonth; }
+            set 
+            {
+                if (_spotMonth != value)
+                {
+                    _spotMonth = value; 
                     RaisePropertyChanged();
                 }
             }

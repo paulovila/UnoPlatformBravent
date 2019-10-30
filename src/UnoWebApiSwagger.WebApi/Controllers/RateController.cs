@@ -18,12 +18,25 @@ namespace UnoWebApiSwagger.WebApi.Controllers
                 EffectiveDate = DateTime.UtcNow,
                 Currencies = new[]
                 {
-                    new Currency {Code = "USD", SpotRate = 1M, SpotWeek = 1.0M},
-                    new Currency {Code = "JPY", SpotRate = Random, SpotWeek = Random},
-                    new Currency {Code = "EUR", SpotRate = Random, SpotWeek = Random}
+                    CreateCurrency("USD"),
+                    CreateCurrency("JPY"),
+                    CreateCurrency("EUR")
                 }
             });
         }
-        private decimal Random => new Random().Next(0, 100) / 100M;
+
+        private Currency CreateCurrency(string code)
+        {
+            var spot = new Random().Next(0, 1000000);
+            return  new Currency
+            {
+                Code = code,
+                SpotRate = spot,
+                SpotWeek = spot * Random,
+                SpotMonth = spot * Random
+            };
+        }
+
+        private static decimal Random => new Random().Next(-100, 100) / 100M;
     }
 }

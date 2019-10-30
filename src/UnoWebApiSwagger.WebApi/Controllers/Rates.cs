@@ -13,5 +13,6 @@ namespace UnoWebApiSwagger.WebApi.Controllers
         public string Code { get; set; }
         public decimal SpotRate { get; set; }
         public decimal SpotWeek { get; set; }
+        public decimal SpotMonth { get; set; }
     }
 }
