@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:webApiClient="using:UnoWebApiSwagger.WebApiClient"
     xmlns:viewModels="using:UnoWebApiSwagger.ViewModels"
+    xmlns:parts="using:UnoWebApiSwagger.Shared.Parts"
     mc:Ignorable="d" 
     d:DataContext="{d:DesignInstance viewModels:RatesViewModelDesign, IsDesignTimeCreatable=True}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" d:DesignWidth="458" d:DesignHeight="408">
@@ -16,22 +17,22 @@
                 <ResourceDictionary Source="Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <GridLength x:Key="ColumnWidth">100</GridLength>
+            <GridLength x:Key="ColumnWidth">200</GridLength>
 
             <DataTemplate x:Key="CurrencyTemplate" x:DataType="webApiClient:Currency">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{StaticResource ColumnWidth}" />
+                        <ColumnDefinition Width="50" />
                         <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
                         <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
                         <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
                         <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{Binding Code}" />
-                    <TextBlock Grid.Column="1" Text="{Binding SpotRate}" HorizontalAlignment="Center" />
-                    <TextBlock Grid.Column="2" Text="{Binding SpotWeek}" HorizontalAlignment="Center" />
-                    <TextBlock Grid.Column="3" Text="{Binding SpotMonth}" HorizontalAlignment="Center" />
-                    <local:GraphControl Grid.Column="4" Values="{Binding Converter={StaticResource CurrencyToValuesConverter}}" />
+                    <TextBlock Grid.Column="0" Text="{Binding Code}" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Text="{Binding SpotRate}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Column="2" Text="{Binding SpotWeek}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Column="3" Text="{Binding SpotMonth}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <local:GraphControl Margin="10" Height="100" Grid.Column="4" Values="{Binding Converter={StaticResource CurrencyToValuesConverter}}" />
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -39,24 +40,14 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
-                <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
-                <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
-                <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="1" Text="Spot" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Text="Week" HorizontalAlignment="Center" />
-            <TextBlock Grid.Column="3" Text="Month" HorizontalAlignment="Center" />
-        </Grid>
-        <ListView         
-            ItemTemplate="{StaticResource CurrencyTemplate}" ItemsSource="{Binding Rates.Currencies}"
-            Grid.Row="1">
-        </ListView>
+
+        <parts:HeaderControl />
+
+        <parts:RatesControl Grid.Row="1" />
+
         <Button Margin="4" Background="Transparent" Foreground="White" Padding="0" BorderThickness="0"  Command="{Binding RefreshCommand}" Grid.Row="2" HorizontalAlignment="Center">
             <Border Background="#FF00478D" CornerRadius="11.5" >
                 <StackPanel Orientation="Horizontal"  Margin="3,0,4,3">
