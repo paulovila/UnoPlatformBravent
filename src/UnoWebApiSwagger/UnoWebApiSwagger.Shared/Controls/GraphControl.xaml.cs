@@ -1,33 +1,46 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Xaml;
 using SkiaSharp;
 using SkiaSharp.Views.UWP;
-using UnoWebApiSwagger.WebApiClient;
+using Uno.Extensions;
 
 namespace UnoWebApiSwagger.Shared
 {
     public sealed partial class GraphControl
     {
+        private const int PreviewPointCount = 3;
+
+
         public GraphControl()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
+
+        private static readonly Random Rnd = new Random();
 
         void OnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
             SKImageInfo info = args.Info;
             SKSurface surface = args.Surface;
             SKCanvas canvas = surface.Canvas;
+
             canvas.Clear();
 
-            var points = GetPoints();
-            var path = new SKPath();
+            var points = ToViewPort(GetPoints().ToList(), info.Width, info.Height).ToList();
 
-            var (startX, startY) = points.First();
+            var path = new SKPath();
+            var translatedPoints = points.Select(tuple => ((float)tuple.Item1, (float)(info.Height - tuple.Item2))).ToList();
+
+            var (startX, startY) = translatedPoints.First();
 
             path.MoveTo(startX, startY);
-            foreach (var (x, y) in points)
+            foreach (var (x, y) in translatedPoints)
+            {
                 path.LineTo(x, y);
+            }
 
             var strokePaint = new SKPaint
             {
@@ -41,21 +54,45 @@ namespace UnoWebApiSwagger.Shared
             canvas.DrawPath(path, strokePaint);
         }
 
-        private (float, float)[] GetPoints() => new[]
+        private IEnumerable<(double, double)> ToViewPort(IList<(double, double)> points, int viewportWidth, int viewportHeight)
         {
-            (0f, (float)Currency.SpotRate),
-            (7f, (float)Currency.SpotWeek),
-            (30f, (float)Currency.SpotMonth)
-        };
+            var maxY = points.Max(tuple => tuple.Item2);
+            var minY = points.Min(tuple => tuple.Item2);
+            var maxX = points.Max(tuple => tuple.Item1);
+            var minX = points.Min(tuple => tuple.Item1);
 
+            var diffX = maxX - minX;
+            var diffY = maxY - minY;
 
-        public static readonly DependencyProperty CurrencyProperty = DependencyProperty.Register(
-            "Currency", typeof(Currency), typeof(GraphControl), new PropertyMetadata(default(Currency)));
+            var translated = points.Select(tuple =>
+            {
+                var (origX, origY) = tuple;
+                var x = origX * viewportWidth / diffX;
+                var y = (origY - minY) * viewportHeight / diffY;
+                return (x, y);
+            });
 
-        public Currency Currency
+            return translated;
+        }
+
+        private IEnumerable<(double, double)> GetPoints()
         {
-            get => (Currency)GetValue(CurrencyProperty);
-            set => SetValue(CurrencyProperty, value);
+            if (Values == null)
+            {
+                return Enumerable.Range(0, PreviewPointCount)
+                    .Select(x => ((double)x / (PreviewPointCount - 1), Rnd.NextDouble())).ToList();
+            }
+
+            return Values.Cast<(double, double)>().ToList();
+        }
+
+        public static readonly DependencyProperty ValuesProperty = DependencyProperty.Register(
+            "Values", typeof(IEnumerable), typeof(GraphControl), new PropertyMetadata(default(IEnumerable)));
+
+        public IEnumerable Values
+        {
+            get { return (IEnumerable)GetValue(ValuesProperty); }
+            set { SetValue(ValuesProperty, value); }
         }
     }
 }

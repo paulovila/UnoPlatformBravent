@@ -15,23 +15,28 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <GridLength x:Key="ColumnWidth">100</GridLength>
+
             <DataTemplate x:Key="CurrencyTemplate" x:DataType="webApiClient:Currency">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50" />
-                        <ColumnDefinition Width="50" />
-                        <ColumnDefinition Width="50" />
-                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="{StaticResource ColumnWidth}" />
+                        <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
+                        <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
+                        <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
+                        <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="{Binding Code}" />
                     <TextBlock Grid.Column="1" Text="{Binding SpotRate}" HorizontalAlignment="Center" />
                     <TextBlock Grid.Column="2" Text="{Binding SpotWeek}" HorizontalAlignment="Center" />
-                    <local:GraphControl Grid.Column="3" Currency="{Binding }" />
+                    <TextBlock Grid.Column="3" Text="{Binding SpotMonth}" HorizontalAlignment="Center" />
+                    <local:GraphControl Grid.Column="4" Values="{Binding Converter={StaticResource CurrencyToValuesConverter}}" />
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid Margin="10" Width="250">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -39,13 +44,14 @@
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
+                <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
+                <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
+                <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="1" Text="Spot" HorizontalAlignment="Center"/>
             <TextBlock Grid.Column="2" Text="Week" HorizontalAlignment="Center" />
+            <TextBlock Grid.Column="3" Text="Month" HorizontalAlignment="Center" />
         </Grid>
         <ListView         
             ItemTemplate="{StaticResource CurrencyTemplate}" ItemsSource="{Binding Rates.Currencies}"
@@ -65,3 +71,5 @@
         </Button>
     </Grid>
 </Page>
+
+    
