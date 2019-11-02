@@ -1,5 +1,4 @@
-﻿
-using System.Linq;
+﻿using System.Linq;
 using Windows.UI.Xaml;
 using SkiaSharp;
 using SkiaSharp.Views.UWP;
@@ -9,7 +8,15 @@ namespace UnoWebApiSwagger.Shared
 {
     public sealed partial class GraphControl
     {
-        public GraphControl() => InitializeComponent();
+        public GraphControl()
+        {
+            InitializeComponent();
+#if __WASM__
+            DataContextChanged += (s, e) => Invalidate();
+#endif
+        }
+
+        private void Invalidate() => SkXamlCanvas.Invalidate();
 
         void OnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
@@ -17,8 +24,8 @@ namespace UnoWebApiSwagger.Shared
             canvas.Clear();
             var points = GetPoints();
             var spot = points.First().Item2;
-            float spotFactor = 1f / (spot * 0.6f);
-            float width = args.Info.Width;
+            float spotFactor = 0.5f / (spot * Tolerance);
+            float width = args.Info.Width - 2f;
             float height = args.Info.Height;
 
             float maxDaysFactor = width / points.Last().Item1;
@@ -26,6 +33,10 @@ namespace UnoWebApiSwagger.Shared
 
             float previousY = height * 0.5f;
             float previousX = 0f;
+            var xAxisPath = new SKPath();
+            xAxisPath.MoveTo(0, height * 0.5f);
+            xAxisPath.LineTo(width, height * 0.5f);
+            canvas.DrawPath(xAxisPath, Paints.Gray);
 
             foreach (var (x, y) in translatedPoints)
             {
@@ -37,7 +48,7 @@ namespace UnoWebApiSwagger.Shared
                 var dayPath = new SKPath();
                 dayPath.MoveTo(x, 0);
                 dayPath.LineTo(x, height);
-                canvas.DrawPath(dayPath, Paints.Black);
+                canvas.DrawPath(dayPath, Paints.Gray);
 
                 (previousX, previousY) = (x, y);
             }
@@ -58,6 +69,17 @@ namespace UnoWebApiSwagger.Shared
         {
             get => (Currency)GetValue(CurrencyProperty);
             set => SetValue(CurrencyProperty, value);
+        }
+
+        public static readonly DependencyProperty ToleranceProperty = DependencyProperty.Register(
+            "Tolerance", typeof(float), typeof(GraphControl),
+            new PropertyMetadata(0.1f, (d, e) => (d as GraphControl).Invalidate()));
+
+
+        public float Tolerance
+        {
+            get => (float)GetValue(ToleranceProperty);
+            set => SetValue(ToleranceProperty, value);
         }
     }
 }

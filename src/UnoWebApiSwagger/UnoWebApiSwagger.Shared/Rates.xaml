@@ -10,7 +10,7 @@
     xmlns:parts="using:UnoWebApiSwagger.Shared.Parts"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:RatesViewModelDesign, IsDesignTimeCreatable=True}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" d:DesignWidth="458" d:DesignHeight="408">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" d:DesignWidth="648.4" d:DesignHeight="358.133">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,6 +20,7 @@
     </Page.Resources>
     <Grid Margin="10" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -35,19 +36,27 @@
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="100" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding Code}" />
                         <TextBlock Grid.Column="1" Text="{Binding SpotRate}" HorizontalAlignment="Center" />
                         <TextBlock Grid.Column="2" Text="{Binding SpotWeek}" HorizontalAlignment="Center" />
                         <TextBlock Grid.Column="3" Text="{Binding SpotMonth}" HorizontalAlignment="Center" />
                         <TextBlock Grid.Column="4" Text="{Binding SpotMonth3}" HorizontalAlignment="Center" />
-                        <local:GraphControl Grid.Column="5" Currency="{Binding }" />
+                        <local:GraphControl Grid.Column="5" Currency="{Binding }" Tolerance="{Binding ElementName=Slider1, Path=Value}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Margin="4" Content="Get Rates" Command="{Binding RefreshCommand}" Grid.Row="2"
-                HorizontalAlignment="Center" />
+        <Button Margin="4" Grid.Row="2" Content="Get Rates" Command="{Binding RefreshCommand}" HorizontalAlignment="Center" />
+        <StackPanel Grid.Row="3" Orientation="Horizontal" >
+            <TextBlock Text="Tolerance:" />
+            <Slider Width="80" x:Name="Slider1" Maximum="0.8" Minimum="0.1" StepFrequency="0.01" Margin="10"  />
+            <TextBlock >
+                <Run Text="±"/>
+                <Run Text="{Binding ElementName=Slider1, Path=Value, Mode=TwoWay}" />
+                <Run Text="%"/>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </Page>

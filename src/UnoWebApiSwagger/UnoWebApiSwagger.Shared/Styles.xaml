@@ -97,9 +97,9 @@
     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent" />
     <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#FF7A7A7A" />
     <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Transparent" />
-    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent" />
+    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="#FF7A7A7A" />
     <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="Transparent" />
 
     <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="{StaticResource SystemBaseMediumLowColor}" />

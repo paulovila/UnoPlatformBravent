@@ -13,5 +13,5 @@
     xmlns:skia="using:SkiaSharp.Views.UWP"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <skia:SKXamlCanvas PaintSurface="OnPaintSurface" />
+    <skia:SKXamlCanvas PaintSurface="OnPaintSurface" x:Name="SkXamlCanvas"/>
 </UserControl>

@@ -4,13 +4,13 @@ namespace UnoWebApiSwagger.Shared
 {
     public static class Paints
     {
-        public static SKPaint Black = new SKPaint
+        public static SKPaint Gray = new SKPaint
         {
             Style = SKPaintStyle.Stroke,
-            Color = SKColors.Black,
+            Color = SKColors.Gray,
             StrokeWidth = 1,
             FilterQuality = SKFilterQuality.High,
-            IsAntialias = true,
+            IsAntialias = false,
         };
         public static SKPaint Green = new SKPaint
         {
