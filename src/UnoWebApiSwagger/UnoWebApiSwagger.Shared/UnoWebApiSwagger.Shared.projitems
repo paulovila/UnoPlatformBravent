@@ -23,8 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\GraphControl.xaml.cs">
       <DependentUpon>GraphControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\PlotPoint.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CurrencyToValuesConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Paints.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -33,9 +32,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Parts\HeaderControl.xaml.cs">
       <DependentUpon>HeaderControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Parts\RatesControl.xaml.cs">
-      <DependentUpon>RatesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Rates.xaml.cs">
       <DependentUpon>$fileinputname$.xaml</DependentUpon>
@@ -55,10 +51,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Parts\HeaderControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Parts\RatesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

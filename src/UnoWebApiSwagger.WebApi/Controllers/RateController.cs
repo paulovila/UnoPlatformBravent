@@ -33,10 +33,11 @@ namespace UnoWebApiSwagger.WebApi.Controllers
                 Code = code,
                 SpotRate = spot,
                 SpotWeek = spot * Random,
-                SpotMonth = spot * Random
+                SpotMonth = spot * Random,
+                SpotMonth3 = spot * Random,
             };
         }
 
-        private static decimal Random => new Random().Next(-100, 100) / 100M;
+        private static decimal Random => new Random().Next(-100, 100) / 1000M;
     }
 }

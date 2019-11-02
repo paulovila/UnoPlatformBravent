@@ -5,18 +5,14 @@ namespace UnoWebApiSwagger.ViewModels
 {
     public class MainPageViewModel : BindableBase
     {
-        private readonly INavService _navService;
-        private readonly IEventAggregator _eventAggregator;
         private readonly IDispatcherUiService _dispatcherUiService;
         private string _error;
         public MainPageViewModel(INavService navService, IEventAggregator eventAggregator, IDispatcherUiService dispatcherUiService)
         {
-            _navService = navService;
-            _eventAggregator = eventAggregator;
             _dispatcherUiService = dispatcherUiService;
-            _navService.NavigationFailed = e => _eventAggregator.GetEvent<ErrorEvent>().Publish(e);
-            _eventAggregator.GetEvent<ErrorEvent>().Subscribe(LogError);
-            _dispatcherUiService.Run(() => _navService.Navigate<LoginViewModel>());
+            navService.NavigationFailed = e => eventAggregator.GetEvent<ErrorEvent>().Publish(e);
+            eventAggregator.GetEvent<ErrorEvent>().Subscribe(LogError);
+            _dispatcherUiService.Run(navService.Navigate<LoginViewModel>);
         }
 
         public string Error

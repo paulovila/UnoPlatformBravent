@@ -5,10 +5,7 @@
     xmlns:local="using:UnoWebApiSwagger"
     xmlns:shared="using:UnoWebApiSwagger.Shared"
     RequestedTheme="Light">
-
     <Application.Resources>
         <local:Composition x:Key="Composition" />
-        <shared:CurrencyToValuesConverter x:Key="CurrencyToValuesConverter" />
     </Application.Resources>
-
 </Application>

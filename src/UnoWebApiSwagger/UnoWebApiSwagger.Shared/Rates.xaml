@@ -8,59 +8,46 @@
     xmlns:webApiClient="using:UnoWebApiSwagger.WebApiClient"
     xmlns:viewModels="using:UnoWebApiSwagger.ViewModels"
     xmlns:parts="using:UnoWebApiSwagger.Shared.Parts"
-    mc:Ignorable="d" 
+    mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:RatesViewModelDesign, IsDesignTimeCreatable=True}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" d:DesignWidth="458" d:DesignHeight="408">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml"/>
+                <ResourceDictionary Source="Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <GridLength x:Key="ColumnWidth">200</GridLength>
-
-            <DataTemplate x:Key="CurrencyTemplate" x:DataType="webApiClient:Currency">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50" />
-                        <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
-                        <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
-                        <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
-                        <ColumnDefinition Width="{StaticResource ColumnWidth}"  />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{Binding Code}" VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="1" Text="{Binding SpotRate}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBlock Grid.Column="2" Text="{Binding SpotWeek}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBlock Grid.Column="3" Text="{Binding SpotMonth}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <local:GraphControl Margin="10" Height="100" Grid.Column="4" Values="{Binding Converter={StaticResource CurrencyToValuesConverter}}" />
-                </Grid>
-            </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid Margin="10">
+    <Grid Margin="10" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
         <parts:HeaderControl />
-
-        <parts:RatesControl Grid.Row="1" />
-
-        <Button Margin="4" Background="Transparent" Foreground="White" Padding="0" BorderThickness="0"  Command="{Binding RefreshCommand}" Grid.Row="2" HorizontalAlignment="Center">
-            <Border Background="#FF00478D" CornerRadius="11.5" >
-                <StackPanel Orientation="Horizontal"  Margin="3,0,4,3">
-                    <SymbolIcon Margin="-3,0,0,0" Symbol="Refresh"  RenderTransformOrigin="0.5,0.5" >
-                        <SymbolIcon.RenderTransform>
-                            <CompositeTransform ScaleX="0.6" ScaleY="0.6" TranslateY="2"/>
-                        </SymbolIcon.RenderTransform>
-                    </SymbolIcon>
-                    <TextBlock Text="Refresh" VerticalAlignment="Center" />
-                </StackPanel>
-            </Border>
-        </Button>
+        <ListView ItemsSource="{Binding Rates.Currencies}" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="webApiClient:Currency">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="60" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Code}" />
+                        <TextBlock Grid.Column="1" Text="{Binding SpotRate}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Column="2" Text="{Binding SpotWeek}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Column="3" Text="{Binding SpotMonth}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Column="4" Text="{Binding SpotMonth3}" HorizontalAlignment="Center" />
+                        <local:GraphControl Grid.Column="5" Currency="{Binding }" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Margin="4" Content="Get Rates" Command="{Binding RefreshCommand}" Grid.Row="2"
+                HorizontalAlignment="Center" />
     </Grid>
 </Page>
-
-    

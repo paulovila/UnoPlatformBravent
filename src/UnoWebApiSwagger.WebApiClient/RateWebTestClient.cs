@@ -7,51 +7,33 @@ namespace UnoWebApiSwagger.WebApiClient
 {
     public class RateWebTestClient : IRateWebClient
     {
-        public Task<Rates> GetAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Rates> GetAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(new Rates
             {
-                Currencies = new ObservableCollection<Currency>()
+                Currencies = new ObservableCollection<Currency>
                 {
-                    new Currency()
-                    {
-                        Code = "TST1",
-                        SpotRate = 12,
-                        SpotWeek = 10,
-                    },
-                    new Currency()
-                    {
-                        Code = "TST2",
-                        SpotRate = 4,
-                        SpotWeek = 8,
-                    },
-                    new Currency()
-                    {
-                        Code = "TST3",
-                        SpotRate = 14,
-                        SpotWeek = 9,
-                    },
-                    new Currency()
-                    {
-                        Code = "TST4",
-                        SpotRate = 12,
-                        SpotWeek = 12,
-                    },
-                    new Currency()
-                    {
-                        Code = "TST5",
-                        SpotRate = 8,
-                        SpotWeek = 15,
-                    },
-                    new Currency()
-                    {
-                        Code = "TST6",
-                        SpotRate = 14,
-                        SpotWeek = 11,
-                    },
+                    CreateCurrency("TST"),
+                    CreateCurrency("TST"),
+                    CreateCurrency("TST")
                 },
                 EffectiveDate = DateTime.Now,
             });
         }
+
+        private Currency CreateCurrency(string code)
+        {
+            var spot = new Random().Next(0, 1000000);
+            return new Currency
+            {
+                Code = code,
+                SpotRate = spot,
+                SpotWeek = spot * Random,
+                SpotMonth = spot * Random,
+                SpotMonth3 = spot * Random
+            };
+        }
+
+        private static decimal Random => new Random().Next(-100, 100) / 1000M;
     }
 }

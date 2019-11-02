@@ -1,162 +1,63 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿
 using System.Linq;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using SkiaSharp;
 using SkiaSharp.Views.UWP;
-using UnoWebApiSwagger.Controls;
+using UnoWebApiSwagger.WebApiClient;
 
 namespace UnoWebApiSwagger.Shared
 {
     public sealed partial class GraphControl
     {
-        private const int PreviewPointCount = 3;
+        public GraphControl() => InitializeComponent();
 
-        private static readonly Random Rnd = new Random();
-
-        public static readonly DependencyProperty ValuesProperty = DependencyProperty.Register(
-            "Values", typeof(IEnumerable), typeof(GraphControl), new PropertyMetadata(default(IEnumerable)));
-
-        private readonly SKPaint _strokePaint;
-
-        private readonly SKPaint _textPaint;
-
-        public GraphControl()
+        void OnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
-            InitializeComponent();
-
-            _textPaint = new SKPaint
-            {
-                Color = SKColors.Black,
-                IsAntialias = true,
-                Style = SKPaintStyle.Fill,
-                TextAlign = SKTextAlign.Center,
-                TextSize = 12
-            };
-
-            _strokePaint = new SKPaint
-            {
-                Style = SKPaintStyle.Stroke,
-                Color = SKColors.Red,
-                StrokeWidth = 1,
-                FilterQuality = SKFilterQuality.High,
-                IsAntialias = true
-            };
-        }
-
-
-        public IEnumerable Values
-        {
-            get => (IEnumerable)GetValue(ValuesProperty);
-            set => SetValue(ValuesProperty, value);
-        }
-
-        private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
-        {
-            var info = args.Info;
-            var surface = args.Surface;
-            var canvas = surface.Canvas;
-
+            var canvas = args.Surface.Canvas;
             canvas.Clear();
+            var points = GetPoints();
+            var spot = points.First().Item2;
+            float spotFactor = 1f / (spot * 0.6f);
+            float width = args.Info.Width;
+            float height = args.Info.Height;
 
-            var points = ToViewPort(GetPoints().ToList(), info.Width, info.Height).ToList();
+            float maxDaysFactor = width / points.Last().Item1;
+            var translatedPoints = points.Skip(1).Select(t => (t.Item1 * maxDaysFactor, height * (t.Item2 * spotFactor + 0.5f)));
 
-            PlotPoints(points, canvas);
-            DrawLabels(points, canvas, args.Info.Width);
-        }
+            float previousY = height * 0.5f;
+            float previousX = 0f;
 
-        private void DrawLabels(IEnumerable<PlotPoint> points, SKCanvas canvas, int width)
-        {
-            foreach (var plotPoint in points)
+            foreach (var (x, y) in translatedPoints)
             {
-                DrawLabel(canvas, plotPoint, width);
+                var path = new SKPath();
+                path.MoveTo(previousX, previousY);
+                path.LineTo(x, y);
+                canvas.DrawPath(path, previousY > y ? Paints.Green : Paints.Red);
+
+                var dayPath = new SKPath();
+                dayPath.MoveTo(x, 0);
+                dayPath.LineTo(x, height);
+                canvas.DrawPath(dayPath, Paints.Black);
+
+                (previousX, previousY) = (x, y);
             }
         }
 
-        private void PlotPoints(IReadOnlyCollection<PlotPoint> points, SKCanvas canvas)
+        private (float, float)[] GetPoints() => new[]
         {
-            var path = new SKPath();
+            (0f, (float)Currency.SpotRate),
+            (7f, (float)Currency.SpotWeek),
+            (30f, (float)Currency.SpotMonth),
+            (90f, (float)Currency.SpotMonth3)
+        };
 
-            var first = points.First();
+        public static readonly DependencyProperty CurrencyProperty = DependencyProperty.Register(
+            "Currency", typeof(Currency), typeof(GraphControl), new PropertyMetadata(default(Currency)));
 
-            path.MoveTo((float)first.Translated.X, (float)first.Translated.Y);
-            foreach (var plotPoint in points)
-            {
-                Plot(path, plotPoint);
-            }
-
-            canvas.DrawPath(path, _strokePaint);
-        }
-
-        private void DrawLabel(SKCanvas canvas, PlotPoint plotPoint, int width)
+        public Currency Currency
         {
-            var text = plotPoint.Original.Y.ToString("F0");
-            var vertOffset = plotPoint.Translated.Y < _textPaint.TextSize ? _textPaint.TextSize : 0;
-
-            var horzOffset = GetHorzOffset(text, plotPoint, width);
-
-            var point = new SKPoint((float)(plotPoint.Translated.X + horzOffset), (float)plotPoint.Translated.Y + vertOffset);
-            canvas.DrawText(text, point, _textPaint);
-        }
-
-        private double GetHorzOffset(string text, PlotPoint plotPoint, int viewportWidth)
-        {
-            var width = _textPaint.MeasureText(text);
-            var halfWidth = width / 2;
-
-            if (plotPoint.Translated.X < halfWidth)
-            {
-                return halfWidth;
-            }
-
-            if (plotPoint.Translated.X + halfWidth > viewportWidth)
-            {
-                return -halfWidth;
-            }
-
-            return 0;
-
-        }
-
-        private void Plot(SKPath path, PlotPoint plotPoint)
-        {
-            var x = (float)plotPoint.Translated.X;
-            var y = (float)plotPoint.Translated.Y;
-            path.LineTo(x, y);
-        }
-
-        private IEnumerable<PlotPoint> ToViewPort(IList<(double, double)> points, int viewportWidth, int viewportHeight)
-        {
-            var maxY = points.Max(tuple => tuple.Item2);
-            var minY = points.Min(tuple => tuple.Item2);
-            var maxX = points.Max(tuple => tuple.Item1);
-            var minX = points.Min(tuple => tuple.Item1);
-
-            var diffX = maxX - minX;
-            var diffY = maxY - minY;
-
-            var translated = points.Select(tuple =>
-            {
-                var (origX, origY) = tuple;
-                var x = origX * viewportWidth / diffX;
-                var y = (origY - minY) * viewportHeight / diffY;
-                return new PlotPoint(new Point(origX, origY), new Point(x, viewportHeight - y));
-            });
-
-            return translated;
-        }
-
-        private IEnumerable<(double, double)> GetPoints()
-        {
-            if (Values == null)
-            {
-                return Enumerable.Range(0, PreviewPointCount)
-                    .Select(x => ((double)x / (PreviewPointCount - 1), Rnd.NextDouble())).ToList();
-            }
-
-            return Values.Cast<(double, double)>().ToList();
+            get => (Currency)GetValue(CurrencyProperty);
+            set => SetValue(CurrencyProperty, value);
         }
     }
 }
