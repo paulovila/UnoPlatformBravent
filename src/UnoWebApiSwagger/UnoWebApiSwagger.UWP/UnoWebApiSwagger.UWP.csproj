@@ -21,12 +21,12 @@
     <PackageReference Include="SkiaSharp.Views">
       <Version>1.68.1-rc.153</Version>
     </PackageReference>
-    <PackageReference Include="Uno.Core" Version="1.29.0-dev.93" />
+    <PackageReference Include="Uno.Core" Version="1.29.0-dev.100" />
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1-uno.28</Version>
     </PackageReference>
     <PackageReference Include="UnoMvvm.Navigation">
-      <Version>2.0.512.3490</Version>
+      <Version>2.0.512.3672</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup>

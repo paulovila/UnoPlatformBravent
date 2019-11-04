@@ -26,7 +26,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <parts:HeaderControl />
-        <ListView ItemsSource="{Binding Rates.Currencies}" Grid.Row="1">
+        <ListView ItemsSource="{Binding Rates.Currencies}" Padding="0" 
+                  BorderThickness="0" Grid.Row="1" 
+                   >
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="webApiClient:Currency">
                     <Grid>
@@ -51,7 +53,7 @@
         <Button Margin="4" Grid.Row="2" Content="Get Rates" Command="{Binding RefreshCommand}" HorizontalAlignment="Center" />
         <StackPanel Grid.Row="3" Orientation="Horizontal" >
             <TextBlock Text="Tolerance:" />
-            <Slider Width="80" x:Name="Slider1" Maximum="0.8" Minimum="0.1" StepFrequency="0.01" Margin="10"  />
+            <Slider Width="80" x:Name="Slider1" Maximum="80" Minimum="10" StepFrequency="1" Margin="10"  />
             <TextBlock >
                 <Run Text="±"/>
                 <Run Text="{Binding ElementName=Slider1, Path=Value, Mode=TwoWay}" />
