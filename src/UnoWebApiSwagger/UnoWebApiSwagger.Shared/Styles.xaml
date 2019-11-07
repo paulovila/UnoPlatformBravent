@@ -95,8 +95,8 @@
     <FontFamily x:Key="ContentControlThemeFontFamily">XamlAutoFontFamily</FontFamily>
     <FontFamily x:Key="SymbolThemeFontFamily">Segoe MDL2 Assets</FontFamily>
     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent" />
-    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+    <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="White" />
+    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#58A4DC" />
     <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#FF7A7A7A" />
     <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Transparent" />
     <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="#FF7A7A7A" />

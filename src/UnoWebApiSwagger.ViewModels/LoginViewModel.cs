@@ -18,7 +18,7 @@ namespace UnoWebApiSwagger.ViewModels
         {
             _tokenClientConfig = tokenClientConfig;
             _navService = navService;
-            LoginCommand = new DelegateCommand(async () => await DoLogin())
+            LoginCommand = new DelegateCommand(async () => await DoLogin(),()=>!string.IsNullOrWhiteSpace( UserName) && !string.IsNullOrWhiteSpace(Password))
                     .ObservesProperty(() => UserName)
                     .ObservesProperty(() => Password);
         }
