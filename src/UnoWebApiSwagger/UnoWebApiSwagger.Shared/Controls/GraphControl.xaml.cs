@@ -24,15 +24,15 @@ namespace UnoWebApiSwagger.Shared
             canvas.Clear();
             var points = GetPoints();
             var spot = points.First().Item2;
-            float spotFactor = 50f / (spot * Tolerance);
+            float spotFactor = -50f /(spot * Tolerance);
             float width = args.Info.Width - 2f;
             float height = args.Info.Height;
 
             float maxDaysFactor = width / points.Last().Item1;
-            var translatedPoints = points.Skip(1).Select(t => (t.Item1 * maxDaysFactor, height * (t.Item2 * spotFactor + 0.5f)));
+            var translatedPoints = points.Skip(1).Select(t => (t.Item1 * maxDaysFactor, height *( t.Item2 * spotFactor + 0.5f)));
 
             (float startX, float startY) = (0f, height * 0.5f);
-            
+
             var axisPath = new SKPath();
             axisPath.MoveTo(0, startY);
             axisPath.LineTo(width, startY);
@@ -44,14 +44,14 @@ namespace UnoWebApiSwagger.Shared
                 dayPath.MoveTo(x, 0);
                 dayPath.LineTo(x, height);
                 canvas.DrawPath(dayPath, Paints.Gray);
-                
+
                 var path = new SKPath();
                 path.MoveTo(startX, startY);
                 path.LineTo(x, y);
                 canvas.DrawPath(path, startY > y ? Paints.Green : Paints.Red);
 
                 (startX, startY) = (x, y);
-            } 
+            }
         }
 
         private (float, float)[] GetPoints() => new[]
