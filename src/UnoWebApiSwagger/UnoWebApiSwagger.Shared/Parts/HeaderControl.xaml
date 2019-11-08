@@ -16,10 +16,12 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="1" Text="Spot" HorizontalAlignment="Center"/>
         <TextBlock Grid.Column="2" Text="Week" HorizontalAlignment="Center" />
         <TextBlock Grid.Column="3" Text="Month" HorizontalAlignment="Center" />
         <TextBlock Grid.Column="4" Text="Month 3" HorizontalAlignment="Center" />
+        <TextBlock Grid.Column="5" Text="Month 6" HorizontalAlignment="Center" />
     </Grid>
 </UserControl>

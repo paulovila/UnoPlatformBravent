@@ -39,13 +39,15 @@
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding Code}" />
                         <TextBlock Grid.Column="1" Text="{Binding SpotRate}" HorizontalAlignment="Center" />
                         <TextBlock Grid.Column="2" Text="{Binding SpotWeek}" HorizontalAlignment="Center" />
                         <TextBlock Grid.Column="3" Text="{Binding SpotMonth}" HorizontalAlignment="Center" />
                         <TextBlock Grid.Column="4" Text="{Binding SpotMonth3}" HorizontalAlignment="Center" />
-                        <local:GraphControl Grid.Column="5" Currency="{Binding }" Tolerance="{Binding ElementName=Slider1, Path=Value}" />
+                        <TextBlock Grid.Column="5" Text="{Binding SpotMonth6}" HorizontalAlignment="Center" />
+                        <local:GraphControl Grid.Column="6" Currency="{Binding }" Tolerance="{Binding ElementName=Slider1, Path=Value}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

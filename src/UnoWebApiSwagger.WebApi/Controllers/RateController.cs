@@ -35,6 +35,7 @@ namespace UnoWebApiSwagger.WebApi.Controllers
                 SpotWeek = spot * Random,
                 SpotMonth = spot * Random,
                 SpotMonth3 = spot * Random,
+                SpotMonth6 = spot * Random,
             };
         }
 

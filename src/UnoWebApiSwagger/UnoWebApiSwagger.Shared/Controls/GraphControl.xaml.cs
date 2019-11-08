@@ -24,12 +24,12 @@ namespace UnoWebApiSwagger.Shared
             canvas.Clear();
             var points = GetPoints();
             var spot = points.First().Item2;
-            float spotFactor = -50f /(spot * Tolerance);
+            float spotFactor = 50f / (spot * Tolerance);
             float width = args.Info.Width - 2f;
             float height = args.Info.Height;
 
             float maxDaysFactor = width / points.Last().Item1;
-            var translatedPoints = points.Skip(1).Select(t => (t.Item1 * maxDaysFactor, height *( t.Item2 * spotFactor + 0.5f)));
+            var translatedPoints = points.Skip(1).Select(t => (t.Item1 * maxDaysFactor, height * (0.5f - t.Item2 * spotFactor)));
 
             (float startX, float startY) = (0f, height * 0.5f);
 
@@ -59,7 +59,8 @@ namespace UnoWebApiSwagger.Shared
             (0f, (float)Currency.SpotRate),
             (7f, (float)Currency.SpotWeek),
             (30f, (float)Currency.SpotMonth),
-            (90f, (float)Currency.SpotMonth3)
+            (90f, (float)Currency.SpotMonth3),
+            (180f, (float)Currency.SpotMonth6)
         };
 
         public static readonly DependencyProperty CurrencyProperty = DependencyProperty.Register(
