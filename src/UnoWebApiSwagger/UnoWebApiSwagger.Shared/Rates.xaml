@@ -10,7 +10,7 @@
     xmlns:parts="using:UnoWebApiSwagger.Shared.Parts"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:RatesViewModelDesign, IsDesignTimeCreatable=True}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" d:DesignWidth="648.4" d:DesignHeight="358.133">
+    d:DesignWidth="648.4" d:DesignHeight="358.133">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -8,7 +8,7 @@
     xmlns:viewModels="using:UnoWebApiSwagger.ViewModels"
     d:DataContext="{Binding Source={d:DesignInstance IsDesignTimeCreatable=True, Type=viewModels:LoginViewModelDesign}}"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+>
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

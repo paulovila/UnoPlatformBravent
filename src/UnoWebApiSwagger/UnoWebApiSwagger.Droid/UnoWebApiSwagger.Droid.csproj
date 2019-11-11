@@ -70,8 +70,6 @@
     </PackageReference>
     <PackageReference Include="Uno.UI" Version="2.0.512-dev.3672" />
     <PackageReference Include="Uno.UniversalImageLoader" Version="1.9.32" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
     <PackageReference Include="UnoMvvm.Navigation">
       <Version>2.0.512.3672</Version>
     </PackageReference>

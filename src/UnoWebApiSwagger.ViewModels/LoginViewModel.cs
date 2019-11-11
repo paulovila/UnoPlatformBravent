@@ -6,7 +6,7 @@ using UnoWebApiSwagger.WebApiClient;
 
 namespace UnoWebApiSwagger.ViewModels
 {
-    public class LoginViewModel : BindableBase, IViewModel
+    public class LoginViewModel : LoadViewModel
     {
         private readonly ITokenClientConfig _tokenClientConfig;
         private readonly INavService _navService;
