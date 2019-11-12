@@ -124,9 +124,9 @@
     <PackageReference Include="Uno.SkiaSharp.Views">
       <Version>1.68.0-uno.290</Version>
     </PackageReference>
-    <PackageReference Include="Uno.UI" Version="2.0.512-dev.3672" />
+    <PackageReference Include="Uno.UI" Version="2.0.512-dev.3880" />
     <PackageReference Include="UnoMvvm.Navigation">
-      <Version>2.0.512.3672</Version>
+      <Version>2.0.512.3880</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
