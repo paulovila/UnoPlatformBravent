@@ -68,10 +68,10 @@
     <PackageReference Include="Uno.SkiaSharp.Views">
       <Version>1.68.0-uno.290</Version>
     </PackageReference>
-    <PackageReference Include="Uno.UI" Version="2.0.512-dev.3880" />
+    <PackageReference Include="Uno.UI" Version="2.0.512-dev.3895" />
     <PackageReference Include="Uno.UniversalImageLoader" Version="1.9.32" />
     <PackageReference Include="UnoMvvm.Navigation">
-      <Version>2.0.512.3880</Version>
+      <Version>2.0.512.3895</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
