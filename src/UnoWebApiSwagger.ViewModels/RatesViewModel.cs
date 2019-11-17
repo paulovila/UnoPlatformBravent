@@ -13,7 +13,7 @@ namespace UnoWebApiSwagger.ViewModels
         public RatesViewModel(IRateWebClient rateWebClient)
         {
             _rateWebClient = rateWebClient;
-            RefreshCommand = new DelegateCommand(async () => await Load());
+            RefreshCommand = new AsyncCommand(Load);
         }
 
         public Rates Rates

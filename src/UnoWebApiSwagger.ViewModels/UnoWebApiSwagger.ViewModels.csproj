@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="UnoMvvm" Version="1.0.42" />
-    <PackageReference Include="UnoMvvm.Navigation" Version="2.0.512.3895" />
+    <PackageReference Include="UnoMvvm" Version="1.0.45" />
+    <PackageReference Include="UnoMvvm.Navigation" Version="2.0.512.3897" />
   </ItemGroup>
 
   <ItemGroup>

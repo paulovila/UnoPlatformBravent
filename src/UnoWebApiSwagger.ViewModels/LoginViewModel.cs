@@ -18,7 +18,7 @@ namespace UnoWebApiSwagger.ViewModels
         {
             _tokenClientConfig = tokenClientConfig;
             _navService = navService;
-            LoginCommand = new DelegateCommand(async () => await DoLogin(),()=>!string.IsNullOrWhiteSpace( UserName) && !string.IsNullOrWhiteSpace(Password))
+            LoginCommand = new AsyncCommand(DoLogin, () => !string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password))
                     .ObservesProperty(() => UserName)
                     .ObservesProperty(() => Password);
         }
@@ -32,7 +32,7 @@ namespace UnoWebApiSwagger.ViewModels
         public string LastError
         {
             get => _lastError;
-            set => SetProperty(ref _lastError , value);
+            set => SetProperty(ref _lastError, value);
         }
 
         public string Password
@@ -46,12 +46,12 @@ namespace UnoWebApiSwagger.ViewModels
         {
             _tokenClientConfig.User = UserName;
             _tokenClientConfig.Password = Password;
-                LastError = null;
+            LastError = null;
 
-                if (!string.IsNullOrEmpty(await _tokenClientConfig.GetToken()))
-                    _navService.Navigate<RatesViewModel>();
-                else
-                    LastError = "Login or password is invalid";
+            if (!string.IsNullOrEmpty(await _tokenClientConfig.GetToken()))
+                _navService.Navigate<RatesViewModel>();
+            else
+                LastError = "Login or password is invalid";
 
         }
     }
