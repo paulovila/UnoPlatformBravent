@@ -68,9 +68,9 @@
     <PackageReference Include="Uno.SkiaSharp.Views">
       <Version>1.68.0-uno.290</Version>
     </PackageReference>
-    <PackageReference Include="Uno.UI" Version="2.0.512-dev.3989" />
+    <PackageReference Include="Uno.UI" Version="2.0.512-dev.4073" />
     <PackageReference Include="Uno.UniversalImageLoader" Version="1.9.32" />
-    <PackageReference Include="UnoMvvm.Navigation" Version="2.0.512.3989" />
+    <PackageReference Include="UnoMvvm.Navigation" Version="2.0.512.4073" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
