@@ -1,5 +1,5 @@
 ﻿{
-  "runtime": "NetCore22",
+  "runtime": "NetCore31",
   "defaultVariables": null,
   "documentGenerator": {
     "webApiToOpenApi": {
@@ -47,11 +47,11 @@
       "output": null,
       "outputType": "Swagger2",
       "assemblyPaths": [
-        "bin/Debug/netcoreapp2.2/UnoWebApiSwagger.WebApi.dll"
+        "bin/Debug/netcoreapp3.1/UnoWebApiSwagger.WebApi.dll"
       ],
       "assemblyConfig": null,
       "referencePaths": [
-        "bin/Debug/netcoreapp2.2/publish"
+        "bin/Debug/netcoreapp3.1/publish"
       ],
       "useNuGetCache": false
     }

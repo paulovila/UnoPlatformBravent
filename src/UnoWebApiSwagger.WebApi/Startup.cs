@@ -1,40 +1,49 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using NSwag;
 
 namespace UnoWebApiSwagger.WebApi
 {
     public class Startup
     {
+        public Startup(IWebHostEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
         private SymmetricSecurityKey _signingKey;
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public IConfigurationRoot Configuration { get; }
 
-        public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettings = new AppSettings();
+            Configuration.GetSection(nameof(AppSettings)).Bind(appSettings);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOptions();
             services.AddMvc()
-                .AddJsonOptions(options =>
+                .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -46,23 +55,41 @@ namespace UnoWebApiSwagger.WebApi
                 );
             });
 
+            services.AddControllers();
+            services.AddSignalR().AddJsonProtocol(options =>
+            {
+                options.PayloadSerializerOptions.IgnoreNullValues = true;
+            });
+            services.Configure<ForwardedHeadersOptions>(options => options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto);
+            services.AddSwaggerDocument(settings =>
+            {
+                settings.Title = "Checks Web API";
+                settings.AddSecurity("Bearer", new string[] { },
+                    new OpenApiSecurityScheme
+                    {
+                        Description = "JWT Authorization header {token}",
+                        Name = "Authorization",
+                        In = OpenApiSecurityApiKeyLocation.Header,
+                        Type = OpenApiSecuritySchemeType.ApiKey
+                    });
+            });
             services.AddAuthorization();
 
-            _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("DOFwVm3m1m9Kt6kfLzy6"));
+            _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.JwtTokenKey));
             // Configure JwtIssuerOptions
             services.Configure<JwtIssuerOptions>(options =>
             {
-                options.Issuer = "AMSTokenServerJtwIssuer";
-                options.Audience = "http://localhost:64122";
+                options.Issuer = appSettings.JwtIssuer;
+                options.Audience = appSettings.JwtAudience;
                 options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
             });
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
-                ValidIssuer = "AMSTokenServerJtwIssuer",
+                ValidIssuer = appSettings.JwtIssuer,
 
                 ValidateAudience = true,
-                ValidAudience = "http://localhost:64122",
+                ValidAudience = appSettings.JwtAudience,
 
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = _signingKey,
@@ -77,12 +104,11 @@ namespace UnoWebApiSwagger.WebApi
                 {
                     options.TokenValidationParameters = tokenValidationParameters;
                 });
-
             Module.Register(services);
+         
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -94,10 +120,32 @@ namespace UnoWebApiSwagger.WebApi
                 app.UseHsts();
             }
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             app.UseAuthentication();
 
             app.UseCors("CorsPolicy");
-            app.UseMvc();
+            app.UseRouting();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<ChecksHub>("/ChecksHub");
+            });
+            app.UseOpenApi(config => config.PostProcess = (document, request) =>
+            {
+                if (!request.Headers.ContainsKey("X-External-Host")) return;
+                document.Host = request.Headers["X-External-Host"].First();
+                document.BasePath = request.Headers["X-External-Path"].First();
+            });
+            app.UseSwaggerUi3(config => config.TransformToExternalPath = (internalUiRoute, request) =>
+            {
+                var externalPath = request.Headers.ContainsKey("X-External-Path") ? request.Headers["X-External-Path"].First() : "";
+                return externalPath + internalUiRoute;
+            });
         }
     }
 }
