@@ -6,8 +6,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="3.1.0" />
-    <PackageReference Include="NSwag.AspNetCore" Version="13.1.6" />
-    <PackageReference Include="NSwag.MSBuild" Version="13.1.6">
+    <PackageReference Include="NSwag.AspNetCore" Version="13.2.0" />
+    <PackageReference Include="NSwag.MSBuild" Version="13.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -16,7 +16,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
   <Target Name="NSwag" AfterTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
-    <Exec Command="$(NSwagExe_Core30) run $(ProjectDir)Controllers.nswag" />
-    <Exec Command="$(NSwagExe_Core30) run $(ProjectDir)Token.nswag" />
+    <Exec Command="$(NSwagExe_Core31) run $(ProjectDir)Controllers.nswag" />
+    <Exec Command="$(NSwagExe_Core31) run $(ProjectDir)Token.nswag" />
   </Target>
 </Project>
