@@ -35,11 +35,11 @@
     <!-- Note that for WebAssembly version 1.1.1 of the console logger required -->
     <PackageReference Include="Grace" Version="7.1.0" />
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.Uwp.Managed" Version="2.0.1-uno.28" />
-    <PackageReference Include="Uno.SkiaSharp.Views" Version="1.68.0-uno.290" />
-    <PackageReference Include="Uno.SkiaSharp.Wasm" Version="1.68.0-uno.290" />
-    <PackageReference Include="Uno.UI" Version="2.1.0-dev.628" />
+    <PackageReference Include="Uno.SkiaSharp.Views" Version="1.68.0-uno.295" />
+    <PackageReference Include="Uno.SkiaSharp.Wasm" Version="1.68.0-uno.295" />
+    <PackageReference Include="Uno.UI" Version="2.2.0-dev.109" />
     <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.10" />
-    <PackageReference Include="UnoMvvm.Navigation" Version="2.0.512.4073" />
+    <PackageReference Include="UnoMvvm.Navigation" Version="2.2.0.109" />
     <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.244" />
   </ItemGroup>
   <ItemGroup>
