@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="UnoMvvm" Version="1.0.47" />
-    <PackageReference Include="UnoMvvm.Navigation" Version="2.2.0.109" />
+    <PackageReference Include="UnoMvvm.Navigation" Version="2.2.0.445" />
   </ItemGroup>
 
   <ItemGroup>
