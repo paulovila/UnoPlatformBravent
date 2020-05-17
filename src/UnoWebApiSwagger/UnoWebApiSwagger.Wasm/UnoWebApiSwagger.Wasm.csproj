@@ -39,6 +39,7 @@
     <PackageReference Include="Uno.UI.RemoteControl" Version="2.4.0" Condition="'$(Configuration)'=='Debug'" />
     <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.2.0" />
     <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="1.2.0" />
+    <PackageReference Include="UnoMvvm.Navigation" Version="2.4.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\UnoWebApiSwagger.ClientContracts\UnoWebApiSwagger.ClientContracts.csproj" />

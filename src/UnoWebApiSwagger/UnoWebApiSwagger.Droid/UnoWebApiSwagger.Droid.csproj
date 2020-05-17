@@ -70,7 +70,7 @@
     </PackageReference>
     <PackageReference Include="Uno.UI" Version="2.4.0" />
     <PackageReference Include="Uno.UniversalImageLoader" Version="1.9.32" />
-    <PackageReference Include="UnoMvvm.Navigation" Version="2.3.0.170" />
+    <PackageReference Include="UnoMvvm.Navigation" Version="2.4.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

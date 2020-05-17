@@ -125,7 +125,7 @@
       <Version>1.68.0-uno.298</Version>
     </PackageReference>
     <PackageReference Include="Uno.UI" Version="2.4.0" />
-    <PackageReference Include="UnoMvvm.Navigation" Version="2.3.0.170" />
+    <PackageReference Include="UnoMvvm.Navigation" Version="2.4.0" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Contents.json">
