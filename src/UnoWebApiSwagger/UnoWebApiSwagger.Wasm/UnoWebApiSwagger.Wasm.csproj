@@ -4,13 +4,20 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netstandard2.0</TargetFramework>
     <WasmHead>true</WasmHead>
-    <MonoWasmRuntimeConfiguration>release-dynamic</MonoWasmRuntimeConfiguration>
     <DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
     <NoWarn>NU1701</NoWarn>
-    <MonoRuntimeDebuggerEnabled Condition="'$(Configuration)'=='Debug'">true</MonoRuntimeDebuggerEnabled>
+    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
+    <CompileTypeScriptDependsOn>_UnoSourceGenerator; $(CompileTypeScriptDependsOn)</CompileTypeScriptDependsOn>
+    <IsUiAutomationMappingEnabled>true</IsUiAutomationMappingEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <MonoRuntimeDebuggerEnabled>true</MonoRuntimeDebuggerEnabled>
+    <DefineConstants>$(DefineConstants);TRACE;DEBUG</DefineConstants>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="..\UnoWebApiSwagger.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
+    <Content Include="Assets\SplashScreen.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="WasmCSS\Fonts.css" />
@@ -20,27 +27,18 @@
     <LinkerDescriptor Include="LinkerConfig.xml" />
   </ItemGroup>
   <ItemGroup>
-    <!-- 
-    This item group is required by the project templace because of the
-    new SDK-Style project, otherwise some files are not aded automatically.
-    
-    You can safely remove this ItemGroup completely.
-    -->
-    <Compile Remove="Program.cs" />
-    <Compile Include="Program.cs" />
-    <Content Include="LinkerConfig.xml" />
-    <Content Include="wwwroot/web.config" />
+    <WasmShellExtraEmccFlags Include="-lidbfs.js" />
   </ItemGroup>
   <ItemGroup>
     <!-- Note that for WebAssembly version 1.1.1 of the console logger required -->
-    <PackageReference Include="Grace" Version="7.1.0" />
+    <PackageReference Include="Grace" Version="7.1.1" />
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.Uwp.Managed" Version="2.0.1-uno.28" />
-    <PackageReference Include="Uno.SkiaSharp.Views" Version="1.68.0-uno.295" />
-    <PackageReference Include="Uno.SkiaSharp.Wasm" Version="1.68.0-uno.295" />
-    <PackageReference Include="Uno.UI" Version="2.2.0-dev.442" />
-    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.10" />
-    <PackageReference Include="UnoMvvm.Navigation" Version="2.2.0.445" />
-    <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.244" />
+    <PackageReference Include="Uno.SkiaSharp.Views" Version="1.68.0-uno.298" />
+    <PackageReference Include="Uno.SkiaSharp.Wasm" Version="1.68.0-uno.298" />
+    <PackageReference Include="Uno.UI" Version="2.4.0" />
+    <PackageReference Include="Uno.UI.RemoteControl" Version="2.4.0" Condition="'$(Configuration)'=='Debug'" />
+    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.2.0" />
+    <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\UnoWebApiSwagger.ClientContracts\UnoWebApiSwagger.ClientContracts.csproj" />

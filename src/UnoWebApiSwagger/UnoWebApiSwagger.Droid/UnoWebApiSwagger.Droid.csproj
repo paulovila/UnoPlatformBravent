@@ -60,17 +60,17 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Grace">
-      <Version>7.1.0</Version>
+      <Version>7.1.1</Version>
     </PackageReference>
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1-uno.28</Version>
     </PackageReference>
     <PackageReference Include="Uno.SkiaSharp.Views">
-      <Version>1.68.0-uno.295</Version>
+      <Version>1.68.0-uno.298</Version>
     </PackageReference>
-    <PackageReference Include="Uno.UI" Version="2.2.0-dev.442" />
+    <PackageReference Include="Uno.UI" Version="2.4.0" />
     <PackageReference Include="Uno.UniversalImageLoader" Version="1.9.32" />
-    <PackageReference Include="UnoMvvm.Navigation" Version="2.2.0.445" />
+    <PackageReference Include="UnoMvvm.Navigation" Version="2.3.0.170" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

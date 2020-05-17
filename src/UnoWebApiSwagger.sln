@@ -31,6 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		UnoWebApiSwagger\UnoWebApiSwagger.Shared\UnoWebApiSwagger.Shared.projitems*{3d9811e5-3022-43b5-84ac-5d328e25eba4}*SharedItemsImports = 5
 		UnoWebApiSwagger\UnoWebApiSwagger.Shared\UnoWebApiSwagger.Shared.projitems*{43ddc7c4-a7cc-41ab-b788-94fcff50cb8f}*SharedItemsImports = 4
 		UnoWebApiSwagger\UnoWebApiSwagger.Shared\UnoWebApiSwagger.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
 		UnoWebApiSwagger\UnoWebApiSwagger.Shared\UnoWebApiSwagger.Shared.projitems*{7c7cbc78-affe-43e7-ad45-66a036b6d004}*SharedItemsImports = 4
